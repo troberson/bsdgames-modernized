@@ -33,10 +33,40 @@
 
 MAXNUM = 65 # Biggest number we handle.
 
-def number_to_string(i):
-	if i == 0:
-		return "zero"
-	
-	if i == 1:
-		return "one"
+NAME1 = [ "", "one", "two", "three", "four", "five", "six", "seven", "eight",
+	"nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+	"sixteen", "seventeen", "eighteen", "nineteen" ]
 
+NAME2 = [ "", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy",
+	"eighty", "ninety" ]
+
+NAME3 = [ "hundred", "thousand", "million", "billion", "trillion",
+	"quadrillion", "quintillion", "sextillion", "septillion", "octillion",
+	"nonillion", "decillion", "undecillion", "duodecillion", "tredecillion",
+	"quattuordecillion", "quindecillion", "sexdecillion", "septendecillion",
+	"octodecillion", "novemdecillion", "vigintillion" ]
+
+
+def number_to_string(i):
+	result_parts=[]
+	result=""
+
+	if i == 0:
+		result = "zero"
+
+	if i > 0 and i < 20:
+		result = NAME1[i]
+
+	if i >= 20 and i < 100:
+		(q,r) = divmod (i, 10)
+		result_parts.append(NAME2[q])
+
+		if r > 0:
+			result_parts.append(NAME1[r])
+
+		result = "-".join(result_parts)
+	
+	return result
+
+if __name__ == "__main__":
+	print (number_to_string(42))
