@@ -53,23 +53,85 @@ def number_to_string(i):
 	result_parts=[]
 	result=""
 
-	if i == 0:
+	i_int = int(math.floor(i))
+	i_int = abs(i_int)
+
+	if i_int == 0:
 		result = "zero"
 
-	if i > 0 and i < 20:
-		result = NAME1[i]
+	elif i_int > 0 and i_int < 20:
+		result = _process_one_part(i_int)
 
-	if i >= 20 and i < 100:
-		i_int = int(math.floor(i))
-		(q,r) = divmod (i_int, 10)
-		result_parts.append(NAME2[q])
+	elif i_int >= 20 and i_int < 100:
+		result = _process_two_parts(i_int);
 
-		if r > 0:
-			result_parts.append(NAME1[r])
+	elif i_int >= 100 and i_int < 1000:
+		result = _process_three_parts(i_int)
 
-		result = "-".join(result_parts)
-	
+	else:
+		return None # Error: Invalid Number
+
 	return result
+
+def _process_one_part(i_int):
+	i_int = abs(i_int)
+
+	if i_int == 0: # done need anything
+		return
+
+	if i_int > (len(NAME1) - 1): # Number too large
+		return None # Error
+
+	return NAME1[i_int]
+
+# Two digits of a number set (e.g. 42 -> forty-two)
+def _process_two_parts(i_int):
+	i_int = abs(i_int)
+
+	if i_int == 0: # don't need anything
+		return ""
+
+	if i_int < 20: # only need one part
+		return _process_one_part(i_int)
+
+	if i_int > 99: # Number too large
+		return None # Error
+
+	result_parts=[]
+	(q,r) = divmod (i_int, 10)
+	result_parts.append(NAME2[q])
+
+	if r > 0:
+		result_parts.append(_process_one_part(r))
+
+	return "-".join(result_parts)
+
+# Three parts of a number set (e.g. 423 = "four hundred twenty-three")
+def _process_three_parts(i_int):
+	i_int = abs(i_int)
+
+	if i_int == 0: # don't need anything
+		return ""
+
+	if i_int < 20: # only need one part
+		return _process_one_part(i_int)
+
+	if i_int > 999: # Number too large
+		return None # Error
+
+	i_str = str(i_int)
+
+	first_digit = int(i_str[0])
+	n_str = _process_one_part(first_digit) + " hundred"
+
+	if (i_int % 100) == 0:
+		return n_str
+
+	result_parts=[]
+	result_parts.append(n_str)
+	result_parts.append(_process_two_parts(i_int % 100))
+
+	return " ".join(result_parts)
 
 if __name__ == "__main__":
 	import sys
