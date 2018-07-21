@@ -67,7 +67,7 @@ def number_to_string(i):
 		result = _process_three_parts(i_int)
 
 	else:
-		return None # Error: Invalid Number
+		raise ValueError("Invalid Number: Number must be between 0 and 1000. " + f"Number was {i}.")
 
 	return result
 
@@ -77,8 +77,9 @@ def _process_one_part(i_int):
 	if i_int == 0: # done need anything
 		return
 
-	if i_int > (len(NAME1) - 1): # Number too large
-		return None # Error
+	if i_int > 19: # Number too large
+		raise ValueError("Invalid Number: Number must be between 0 and 20. " +
+			"Number was {i_int}")
 
 	return NAME1[i_int]
 
@@ -93,7 +94,7 @@ def _process_two_parts(i_int):
 		return _process_one_part(i_int)
 
 	if i_int > 99: # Number too large
-		return None # Error
+		return number_to_string(i_int) # back to the beginning...
 
 	result_parts=[]
 	(q,r) = divmod (i_int, 10)
@@ -115,7 +116,7 @@ def _process_three_parts(i_int):
 		return _process_one_part(i_int)
 
 	if i_int > 999: # Number too large
-		return None # Error
+		return number_to_string(i_int) # back to the beginning...
 
 	i_str = str(i_int)
 
