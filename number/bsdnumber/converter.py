@@ -31,8 +31,6 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-import math
-
 MAXNUM = 65 # Biggest number we handle.
 
 NAME1 = [ "", "one", "two", "three", "four", "five", "six", "seven", "eight",
@@ -53,7 +51,7 @@ def number_to_string(i):
 	result_parts=[]
 	result=""
 
-	i_int = int(math.floor(i))
+	i_int = int(i)
 	i_int = abs(i_int)
 
 	if i_int == 0:
