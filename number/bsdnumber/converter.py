@@ -31,6 +31,8 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
+import math
+
 MAXNUM = 65 # Biggest number we handle.
 
 NAME1 = [ "", "one", "two", "three", "four", "five", "six", "seven", "eight",
@@ -58,7 +60,8 @@ def number_to_string(i):
 		result = NAME1[i]
 
 	if i >= 20 and i < 100:
-		(q,r) = divmod (i, 10)
+		i_int = int(math.floor(i))
+		(q,r) = divmod (i_int, 10)
 		result_parts.append(NAME2[q])
 
 		if r > 0:
@@ -69,4 +72,5 @@ def number_to_string(i):
 	return result
 
 if __name__ == "__main__":
-	print (number_to_string(42))
+	import sys
+	print (number_to_string(float(sys.argv[1])))
