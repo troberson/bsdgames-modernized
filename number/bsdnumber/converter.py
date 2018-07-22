@@ -47,10 +47,17 @@ NAME3 = [ "hundred", "thousand", "million", "billion", "trillion",
 	"octodecillion", "novemdecillion", "vigintillion" ]
 
 from typing import Union
+from decimal import *
 
-def number_to_string(i: Union[int, float, str]) -> str:
+def number_to_string(i: Union[int, float, str, Decimal]) -> str:
 	result_parts=list
 	result=""
+
+	# convert to Decimal
+	try:
+		num = Decimal(i)
+	except:
+		raise TypeError(f"Invalid Number: {i}")
 
 	# float not yet implemented
 	if type(i) == float:

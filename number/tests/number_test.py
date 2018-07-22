@@ -1,4 +1,10 @@
+import pytest
 import bsdnumber.converter
+
+# ERROR: invalid format
+def test_error_invalid():
+	with pytest.raises(TypeError):
+		bsdnumber.converter.number_to_string("42x")
 
 # "zero" is only used for 0
 def test_zero():
