@@ -67,34 +67,34 @@ def number_to_string(i: Union[int, float, str, Decimal]) -> str:
 	if _check_fraction(num):
 		raise NotImplementedError("Fractions are not yet supported")
 
+	# process small numbers (<1000) easily
+	if num < 1000:
+		return _process_small_number(int(num))
+
 	# large numbers not yet supported
-	if num > 1000:
-		raise NotImplementedError("Large Numbers are not yet supported.")
-
-	i_int = abs(int(i))
-
-	if i_int == 0:
-		result = "zero"
-
-	elif i_int > 0 and i_int < 20:
-		result = _process_one_part(i_int)
-
-	elif i_int >= 20 and i_int < 100:
-		result = _process_two_parts(i_int);
-
-	elif i_int >= 100 and i_int < 1000:
-		result = _process_three_parts(i_int)
-
-	else:
-		raise ValueError("Invalid Number: Number must be 0-999. "+
-			f"Number was {i_int}.")
-
-	return result
-
+	raise NotImplementedError("Large Numbers are not yet supported.")
 
 def _check_fraction(num: Decimal) -> bool:
 	return (num // 1 != num)
 
+def _process_small_number(i: int) -> str:
+	i_int = abs(int(i))
+
+	if i_int == 0:
+		return "zero"
+
+	elif i_int > 0 and i_int < 20:
+		return _process_one_part(i_int)
+
+	elif i_int >= 20 and i_int < 100:
+		return _process_two_parts(i_int);
+
+	elif i_int >= 100 and i_int < 1000:
+		return _process_three_parts(i_int)
+
+	else:
+		raise ValueError("Invalid Number: Number must be 0-999. "+
+			f"Number was {i_int}.")
 
 def _process_one_part(i_int: int) -> str:
 	i_int = abs(i_int)
