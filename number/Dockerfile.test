@@ -2,6 +2,8 @@ FROM python:3.7-alpine
 
 WORKDIR bsdnumber/
 
+RUN apk add --no-cache gcc musl-dev
+
 COPY tests/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -9,4 +11,4 @@ COPY . .
 
 RUN pip install --no-cache-dir .
 
-CMD "pytest"
+CMD ["ash", "tests/number_test.sh" ]

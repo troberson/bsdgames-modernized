@@ -47,8 +47,8 @@ NAME3 = [ "hundred", "thousand", "million", "billion", "trillion",
 	"octodecillion", "novemdecillion", "vigintillion" ]
 
 
-def number_to_string(i):
-	result_parts=[]
+def number_to_string(i: float) -> str:
+	result_parts=list
 	result=""
 
 	i_int = int(i)
@@ -71,11 +71,11 @@ def number_to_string(i):
 
 	return result
 
-def _process_one_part(i_int):
+def _process_one_part(i_int: int) -> str:
 	i_int = abs(i_int)
 
-	if i_int == 0: # done need anything
-		return
+	if i_int == 0: # don't need anything
+		return ""
 
 	if i_int > 19: # Number too large
 		raise ValueError("Invalid Number: Number must be between 0 and 20. " +
@@ -84,7 +84,7 @@ def _process_one_part(i_int):
 	return NAME1[i_int]
 
 # Two digits of a number set (e.g. 42 -> forty-two)
-def _process_two_parts(i_int):
+def _process_two_parts(i_int: int) -> str:
 	i_int = abs(i_int)
 
 	if i_int == 0: # don't need anything
@@ -106,7 +106,7 @@ def _process_two_parts(i_int):
 	return "-".join(result_parts)
 
 # Three parts of a number set (e.g. 423 = "four hundred twenty-three")
-def _process_three_parts(i_int):
+def _process_three_parts(i_int: int) -> str:
 	i_int = abs(i_int)
 
 	if i_int == 0: # don't need anything
