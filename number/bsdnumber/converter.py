@@ -48,6 +48,7 @@ NAME3 = [ "hundred", "thousand", "million", "billion", "trillion",
 
 from typing import Union
 from decimal import *
+import math
 
 def number_to_string(i: Union[int, float, str, Decimal]) -> str:
 	result_parts=[]
@@ -71,9 +72,9 @@ def number_to_string(i: Union[int, float, str, Decimal]) -> str:
 	if num < 1000:
 		result_parts.append(_process_small_number(int(num)))
 
-	# large numbers not yet supported
+	# process large number
 	if num >= 1000:
-		raise NotImplementedError("Large Numbers are not yet supported.")
+		result_parts.append(_process_large_number(num))
 
 	return " ".join(result_parts)
 
@@ -98,6 +99,34 @@ def _process_small_number(i: int) -> str:
 	else:
 		raise ValueError("Invalid Number: Number must be 0-999. "+
 			f"Number was {i_int}.")
+
+def _process_large_number (num: Decimal) -> str:
+	result_parts=[]
+
+	# magnitude is the number of digits divided into sets of 3,
+	# not incluing the smallest set
+	# e.g. 1,200,300,400 = 3
+	# 3: "one billion (unit is "billion")
+	# 2: "two hundred million (unit is "million")
+	# 1: "three hundred thousand (unit is "thousand")
+	# 0: "four hundred" (no unit -- "hundred" is processed as small number)
+	magnitude = math.floor(math.log10(num)) // 3
+
+	while magnitude >= 0:
+		partial_number = num // (10**(3*magnitude)) % 1000
+		unit = NAME3[magnitude] if magnitude > 0 else ""
+		magnitude -= 1
+
+		if partial_number == 0:
+			continue
+
+		partial_number_str = _process_small_number (partial_number)
+		result_parts.append(partial_number_str)
+
+		if unit:
+			result_parts.append(unit)
+
+	return " ".join(result_parts)
 
 def _process_one_part(i_int: int) -> str:
 	i_int = abs(i_int)

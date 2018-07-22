@@ -37,3 +37,15 @@ def test_three_parts_all():
 # negative number
 def test_negative():
 	assert bsdnumber.converter.number_to_string(-420) == "minus four hundred twenty"
+
+# string
+def test_string():
+	assert bsdnumber.converter.number_to_string("-72") == "minus seventy-two"
+
+# large number
+def test_large_number_even():
+	assert bsdnumber.converter.number_to_string("1000000000") == "one billion"
+
+# large number with all digits
+def test_large_number():
+	assert bsdnumber.converter.number_to_string("1234567890") == "one billion two hundred thirty-four million five hundred sixty-seven thousand eight hundred ninety"
