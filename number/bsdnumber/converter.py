@@ -78,7 +78,8 @@ def number_to_string(i: Union[int, float, str, Decimal]) -> str:
 		result = _process_three_parts(i_int)
 
 	else:
-		raise ValueError("Invalid Number: Number must be between 0 and 1000. " + f"Number was {i}.")
+		raise ValueError("Invalid Number: Number must be 0-999. "+
+			f"Number was {i_int}.")
 
 	return result
 
@@ -89,7 +90,8 @@ def _process_one_part(i_int: int) -> str:
 		return ""
 
 	if i_int > 19: # Number too large
-		raise ValueError(f"Number must be 0-19. Number was {i_int}")
+		raise ValueError("Invalid Number: Number must be 0-19. " +
+			f"Number was {i_int}")
 
 	return NAME1[i_int]
 
@@ -104,7 +106,8 @@ def _process_two_parts(i_int: int) -> str:
 		return _process_one_part(i_int)
 
 	if i_int > 99: # Number too large
-		raise ValueError(f"Number must be 0-99. Number was {i_int}")
+		raise ValueError("Invalid Number: Number must be 0-99. " +
+			f"Number was {i_int}")
 
 	result_parts=[]
 	(q,r) = divmod (i_int, 10)
@@ -126,7 +129,8 @@ def _process_three_parts(i_int: int) -> str:
 		return _process_one_part(i_int)
 
 	if i_int > 999: # Number too large
-		raise ValueError(f"Number must be 0-999. Number was {i_int}")
+		raise ValueError("Invalid Number: Number must be 0-999. " +
+			f"Number was {i_int}")
 
 	i_str = str(i_int)
 
