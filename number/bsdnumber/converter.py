@@ -50,8 +50,7 @@ from typing import Union
 from decimal import *
 
 def number_to_string(i: Union[int, float, str, Decimal]) -> str:
-	result_parts=list
-	result=""
+	result_parts=[]
 
 	# convert to Decimal
 	try:
@@ -59,9 +58,10 @@ def number_to_string(i: Union[int, float, str, Decimal]) -> str:
 	except:
 		raise TypeError(f"Invalid Number: {i}")
 
-	# negative numbers not yet supported
+	# Negative number
 	if num < 0:
-		raise NotImplementedError("Negative numbers are not yet supported")
+		result_parts.append("minus")
+		num = abs(num)
 
 	# fractions not yet supported
 	if _check_fraction(num):
@@ -69,10 +69,13 @@ def number_to_string(i: Union[int, float, str, Decimal]) -> str:
 
 	# process small numbers (<1000) easily
 	if num < 1000:
-		return _process_small_number(int(num))
+		result_parts.append(_process_small_number(int(num)))
 
 	# large numbers not yet supported
-	raise NotImplementedError("Large Numbers are not yet supported.")
+	if num >= 1000:
+		raise NotImplementedError("Large Numbers are not yet supported.")
+
+	return " ".join(result_parts)
 
 def _check_fraction(num: Decimal) -> bool:
 	return (num // 1 != num)

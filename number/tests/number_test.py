@@ -33,3 +33,7 @@ def test_three_parts_last():
 # three-part number, all digits
 def test_three_parts_all():
 	assert bsdnumber.converter.number_to_string(153) == "one hundred fifty-three"
+
+# negative number
+def test_negative():
+	assert bsdnumber.converter.number_to_string(-420) == "minus four hundred twenty"
