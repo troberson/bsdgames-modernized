@@ -59,9 +59,17 @@ def number_to_string(i: Union[int, float, str, Decimal]) -> str:
 	except:
 		raise TypeError(f"Invalid Number: {i}")
 
-	# float not yet implemented
-	if type(i) == float:
-		raise NotImplementedError("Floats are not yet supported")
+	# negative numbers not yet supported
+	if num < 0:
+		raise NotImplementedError("Negative numbers are not yet supported")
+
+	# fractions not yet supported
+	if _check_fraction(num):
+		raise NotImplementedError("Fractions are not yet supported")
+
+	# large numbers not yet supported
+	if num > 1000:
+		raise NotImplementedError("Large Numbers are not yet supported.")
 
 	i_int = abs(int(i))
 
@@ -82,6 +90,11 @@ def number_to_string(i: Union[int, float, str, Decimal]) -> str:
 			f"Number was {i_int}.")
 
 	return result
+
+
+def _check_fraction(num: Decimal) -> bool:
+	return (num // 1 != num)
+
 
 def _process_one_part(i_int: int) -> str:
 	i_int = abs(i_int)
