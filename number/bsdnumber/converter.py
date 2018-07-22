@@ -46,13 +46,17 @@ NAME3 = [ "hundred", "thousand", "million", "billion", "trillion",
 	"quattuordecillion", "quindecillion", "sexdecillion", "septendecillion",
 	"octodecillion", "novemdecillion", "vigintillion" ]
 
+from typing import Union
 
-def number_to_string(i: float) -> str:
+def number_to_string(i: Union[int, float, str]) -> str:
 	result_parts=list
 	result=""
 
-	i_int = int(i)
-	i_int = abs(i_int)
+	# float not yet implemented
+	if type(i) == float:
+		raise NotImplementedError("Floats are not yet supported")
+
+	i_int = abs(int(i))
 
 	if i_int == 0:
 		result = "zero"
@@ -133,4 +137,4 @@ def _process_three_parts(i_int: int) -> str:
 
 if __name__ == "__main__":
 	import sys
-	print (number_to_string(float(sys.argv[1])))
+	print (number_to_string(sys.argv[1]))
